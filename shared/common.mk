@@ -47,7 +47,7 @@ OSARCH= $(shell uname -m)
 # Basic directory setup for SDK
 # (override directories only if they are not already defined)
 SRCDIR     ?= 
-ROOTDIR    ?= ..
+ROOTDIR    ?= .
 ROOTBINDIR ?= $(ROOTDIR)/bin
 BINDIR     ?= $(ROOTBINDIR)/$(OSLOWER)
 ROOTOBJDIR ?= obj
@@ -63,7 +63,7 @@ CC         := gcc
 LINK       := g++ -fPIC
 
 # Includes
-INCLUDES  += -I. -I$(CUDA_INSTALL_PATH)/include -I$(COMMONDIR)/inc -I$(SHAREDDIR)/inc
+INCLUDES  += -I. -I./inc -I$(CUDA_INSTALL_PATH)/include -I$(COMMONDIR)/inc -I$(SHAREDDIR)/inc
 
 # Warning flags
 CXXWARN_FLAGS := \

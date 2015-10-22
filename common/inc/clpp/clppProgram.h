@@ -46,9 +46,9 @@ public:
 	// Set/Get the base path for all the OpenCL kernels.
 	static string getBasePath();
 	static void setBasePath(string basePath);
+	cl_program _clProgram;
 
 protected:
-	cl_program _clProgram;
 	clppContext* _context;
 
 	static string _basePath;
