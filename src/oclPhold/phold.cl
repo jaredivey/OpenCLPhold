@@ -31,7 +31,7 @@ __kernel void initializeSimulator(__global mwc64x_state_t* state,
   }
 }
 
-__global void markNextEventByLP(__global int* event_lp, __global unsigned char* flags)
+__kernel void markNextEventByLP(__global int* event_lp, __global unsigned char* flags)
 {
   int idx = get_global_id(0);
 
@@ -45,7 +45,7 @@ __global void markNextEventByLP(__global int* event_lp, __global unsigned char* 
   }
 }
 
-__global void simulatorRun(__global mwc64x_state_t* state,
+__kernel void simulatorRun(__global mwc64x_state_t* state,
 						__global float* current_time,
 						__global float* event_time,
 						__global int* event_lp,

@@ -190,8 +190,8 @@ int runTest ()
 	cl_mem d_temp_sort = clCreateBuffer (clpp_context.clContext, CL_MEM_READ_WRITE, temp_sort_bytes, NULL, &errNum);
     clCheckError (errNum, "clCreateBuffer: d_temp_sort");
 
-    //work memory for reduce (4096)
-    size_t temp_reduce_bytes = 64512;
+    //work memory for reduce
+    size_t temp_reduce_bytes = 4096;
 	clppSort_RadixSortGPU RadixReduce(&clpp_context, num_events, temp_reduce_bytes*8, true);
 	cl_mem d_temp_reduce = clCreateBuffer (clpp_context.clContext, CL_MEM_READ_WRITE, temp_reduce_bytes, NULL, &errNum);
     clCheckError (errNum, "clCreateBuffer: d_temp_reduce");
@@ -212,12 +212,17 @@ int runTest ()
     float *local_event_times = (float *)calloc (sizeof(float), num_events);
 	while(true)
 	{
+		std::cout << "0 Current LBTS: " << current_lbts << std::endl;
 		clEnqueueReadBuffer(clpp_context.clQueue, d_event_time, CL_TRUE, 0, 4 * num_events, local_event_times, 0, NULL, NULL);
+		std::cout << "1 Current LBTS: " << current_lbts << "; Local event time[0]: " << local_event_times[10] << std::endl;
 		RadixReduce.pushDatas(local_event_times, num_events);
+		std::cout << "2 Current LBTS: " << current_lbts << std::endl;
 		RadixReduce.sort();
+		std::cout << "3 Current LBTS: " << current_lbts << std::endl;
 		RadixReduce.popDatas(local_event_times);
+		std::cout << "4 Current LBTS: " << current_lbts << std::endl;
 		current_lbts = local_event_times[0];
-		std::cout << "Current LBTS: " << current_lbts << std::endl;
+		std::cout << "5 Current LBTS: " << current_lbts << std::endl;
 
 		if(current_lbts >= stop_time)
 		{

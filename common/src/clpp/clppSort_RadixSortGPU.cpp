@@ -120,11 +120,14 @@ void clppSort_RadixSortGPU::sort()
 
 	cl_int clStatus;
     unsigned int numBlocks = roundUpDiv(_datasetSize, _workgroupSize * 4);
+    std::cout << "Num Blocks: " << numBlocks << std::endl;
 	unsigned int Ndiv4 = roundUpDiv(_datasetSize, 4);
+    std::cout << "Ndiv4: " << Ndiv4 << std::endl;
 
 	size_t global[1] = {toMultipleOf(Ndiv4, _workgroupSize)};
     size_t local[1] = {_workgroupSize};
 
+    std::cout << "global: " << global[0] << "; local: " << local[0] << std::endl;
 	cl_mem dataA = _clBuffer_dataSet;
     cl_mem dataB = _clBuffer_dataSetOut;
     for(unsigned int bitOffset = 0; bitOffset < _bits; bitOffset += 4)
